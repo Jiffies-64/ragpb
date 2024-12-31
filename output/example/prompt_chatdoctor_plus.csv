@@ -1,0 +1,17 @@
+eval,name,prompt
+"lexical_overlap,self_regression",Mary_f557,"
+Given symptoms like muscle cramp with details: sudden muscle cramp beneath the left bottom rib, 
+can you share additional details like age, chronic conditions, or other health issues?
+    "
+"lexical_overlap,self_regression",Francis_b548,"
+Given symptoms like dizziness with details: feeling like the room was spinning when sitting down, worsened when moving around, 
+can you share additional details like age, chronic conditions, or other health issues?
+    "
+"lexical_overlap,self_regression",Francis_a22e,"
+Given symptoms like nausea with details: stomach discomfort, 
+can you share additional details like age, chronic conditions, or other health issues?
+    "
+"lexical_overlap,self_regression",Francis_540f,"
+Given symptoms like dizziness with details: feeling like the room was spinning when sitting down, worsened when moving around, nausea with details: stomach discomfort, 
+can you share additional details like age, chronic conditions, or other health issues?
+    "

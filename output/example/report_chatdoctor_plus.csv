@@ -1,0 +1,5 @@
+eval,average
+lexical_overlap_average_precision,0.17209302325581396
+lexical_overlap_average_recall,0.1581196581196581
+lexical_overlap_average_fmeasure,0.16481069042316257
+self_regression_average_score,3.0

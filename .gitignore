@@ -1,0 +1,7 @@
+# store
+# store/*
+
+# rar files
+*.rar
+
+.idea
