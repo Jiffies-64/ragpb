@@ -1,49 +1,62 @@
-### 数据集
+### Datasets 
 
-#### 医疗数据集
+Medical Dataset Link: https://pmc.ncbi.nlm.nih.gov/articles/PMC10364849/ 
 
-链接：https://pmc.ncbi.nlm.nih.gov/articles/PMC10364849/
-
-#### 法律数据集
-
-链接：https://huggingface.co/datasets/umarbutler/open-australian-legal-corpus
+Legal Dataset Link: https://huggingface.co/datasets/umarbutler/open-australian-legal-corpus 
 
 
 
-### 评估指标
+### Evaluation Metrics
 
 ![ragpb](README.assets/ragpb.png)
 
 
 
-### 运行方式
+### Operation Guide
 
-#### 环境配置
+#### Create a virtual environment (optional)
 
-确保已经安装了 Python 3.8 及以上版本。
+```Bash
+python -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
 
-安装依赖库：
+#### Install dependencies
 
-```bash
+```Bash
 pip install -r requirements.txt
 ```
 
-#### 运行步骤
+#### Modify the .env file
 
-初始化环境：
+Modify `TASK_ID` to be the id of a task. A task can be understood as testing a privacy protection method on a dataset. Therefore, it is recommended that `TASK_ID` contains both the name of the dataset and the name of the protection method, such as `legal_basic`.
 
-```bash
-python scripts/step0_init_env.py --dataset chatdoctor-plus --limit 1000
+Modify the API key according to the model to be used, such as `OPENAI_API_KEY`.
+
+#### Build a vector database
+
+This part will use the original dataset to build a raw text vector database and an atomic sentence vector database for subsequent retrieval.
+
+```Bash
+python scripts/step0_init_env.py --dataset chatdoctor-plus
 ```
 
-生成对抗样本：
+#### Generate privacy attack prompts
 
-```bash
-python scripts/step1_before_attack.py --dataset chatdoctor-plus --limit 1000
+This step will generate prompts that may cause privacy leaks according to certain rules, or use templates, or call large language models, and save them in the database. At the same time, two files will be generated in the root directory `output` folder. The `prompt` file records the id and specific prompts, and the `response template` records the id and the response column to be filled.
+
+```Bash
+python scripts/step1_before_attack.py --dataset chatdoctor-plus
 ```
 
-评估对抗样本：
+#### Externally call the privacy protection method
 
-```bash
+Call the RAG privacy protection method to be evaluated to obtain the response and fill it back into the response template, and upload it to the `user_upload` folder under the root directory.
+
+#### Evaluate adversarial samples
+
+This step will read the uploaded response and calculate the selected evaluation metrics. The results will be saved in the database, and a report will be generated in the root directory `output`, containing the average scores of each metric.
+
+```Bash
 python scripts/step2_after_response.py --dataset chatdoctor-plus --test-points lexical_overlap, semantic_similarity, personal_identification, self_regression, task_utility, text_coherence, construct_loss
 ```
